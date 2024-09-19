@@ -1,5 +1,7 @@
 import click
 
+from src.classes.io import IO
+
 
 @click.command()
 @click.option(
@@ -31,7 +33,7 @@ import click
     show_default=True,
 )
 def main(plateauX: int, plateauY: int, roverCount: int) -> None:
-    print(plateauX, plateauY, roverCount)
+    IO(plateauX=plateauX, plateauY=plateauY, roverCount=roverCount)
 
 
 if __name__ == "__main__":
