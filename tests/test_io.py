@@ -77,3 +77,17 @@ def test_io_createGridXY() -> None:
             assert io.grid.shape == (10, 10)
         else:
             assert io.grid.shape == (pair[0], pair[1])
+
+
+def test_io_createRovers() -> None:
+    rovers: List[int] = [10, 1, 0, -1]
+
+    rover: int
+    for rover in rovers:
+        io: IO = IO(roverCount=rover)
+        io.createRovers()
+
+        if rover < 1:
+            assert len(io.rovers) == 2
+        else:
+            assert len(io.rovers) == rover

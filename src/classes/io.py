@@ -13,6 +13,10 @@ class IO:
         plateauY: int = 10,
         roverCount: int = 2,
     ) -> None | int:
+        self.x: int
+        self.y: int
+        self.roverCount: int
+
         if plateauX < 1:
             self.x = 10
         else:
@@ -23,7 +27,10 @@ class IO:
         else:
             self.y = plateauY
 
-        self.roverCount: int = roverCount
+        if roverCount < 1:
+            self.roverCount = 2
+        else:
+            self.roverCount = roverCount
 
     def createGrid(self) -> None:
         self.grid: ndarray = numpy.zeros(shape=(self.x, self.y))
