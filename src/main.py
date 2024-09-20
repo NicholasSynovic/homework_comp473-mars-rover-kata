@@ -33,7 +33,10 @@ from src.classes.io import IO
     show_default=True,
 )
 def main(plateauX: int, plateauY: int, roverCount: int) -> None:
-    IO(plateauX=plateauX, plateauY=plateauY, roverCount=roverCount)
+    io: IO = IO(plateauX=plateauX, plateauY=plateauY, roverCount=roverCount)
+    io.createGrid()
+    io.createRovers()
+    io.getInput()
 
 
 if __name__ == "__main__":

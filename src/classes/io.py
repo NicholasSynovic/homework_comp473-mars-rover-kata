@@ -39,3 +39,28 @@ class IO:
         self.rovers: List[Rover] = [
             Rover(0, 0) for _ in range(self.roverCount)
         ]  # noqa: E501
+
+    def _replaceLetters(self, string: str) -> str:
+        return "".join(char if char in "RLM" else "" for char in string)
+
+    def getInput(self) -> dict[Rover, str]:
+        data: dict[Rover, str] = {}
+
+        idx: int
+        for idx in range(len(self.rovers)):
+            rover: Rover = self.rovers[idx]
+
+            roverX: int = self.rovers[idx].x
+            roverY: int = self.rovers[idx].y
+
+            cmd: str = (
+                input(f"Rover {idx} (x: {roverX}, y: {roverY}): ")
+                .strip()
+                .upper()  # noqa: E501
+            )
+
+            cmd = self._replaceLetters(string=cmd)
+
+            data[rover] = cmd
+
+        return data
