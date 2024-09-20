@@ -50,6 +50,7 @@ repos:
     rev: 1.7.9
     hooks:
     - id: bandit
+      args: [--exclude, "test*.py"]
       files: '\.py$'
 
   - repo: https://github.com/executablebooks/mdformat
