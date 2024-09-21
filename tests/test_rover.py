@@ -1,4 +1,4 @@
-from src.classes.rover_mock import Rover
+from src.classes.rover import Rover
 
 
 def test_convertCommand() -> None:
