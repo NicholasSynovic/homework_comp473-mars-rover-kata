@@ -4,25 +4,12 @@ from src.classes.rover import Rover
 
 
 class IO:
-    def __init__(
-        self,
-        plateauX: int = 10,
-        plateauY: int = 10,
-        roverCount: int = 2,
-    ) -> None:
-        if roverCount < 1:
-            self.roverCount = 2
-        else:
-            self.roverCount = roverCount
+    def __init__(self, rovers: List[Rover]) -> None:
+        # TODO: Update tests
+        if len(rovers) == 0:
+            raise ValueError("No Rovers availible")
 
-        # TODO: Add test case
-        if self.roverCount > (self.x * self.y):
-            raise ValueError("Number of rovers exceeds plateau area")
-
-    def createRovers(self) -> None:
-        self.rovers: List[Rover] = [
-            Rover(0, 0) for _ in range(self.roverCount)
-        ]  # noqa: E501
+        self.rovers: List[Rover] = rovers
 
     def _replaceLetters(self, string: str) -> str:
         return "".join(char if char in "RLM" else "" for char in string)

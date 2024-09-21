@@ -63,28 +63,19 @@ def main(plateauX: int, plateauY: int, roverCount: int) -> None:
         createRover(plateau=plateau) for _ in range(roverCount)
     ]  # noqa: E501
 
-    print(rovers)
-    quit()
-
     try:
-        io: IO = IO(
-            plateauX=plateauX,
-            plateauY=plateauY,
-            roverCount=roverCount,
-        )
-    except ValueError as err:
-        print(err)
+        io: IO = IO(rovers=rovers)
+    except ValueError as error:
+        print(error)
         quit(1)
 
-    io.createGrid()
-    io.createRovers()
-
     while True:
-        io.getInput()
+        cmds: dict[Rover, str] = io.getInput()
 
         rover: Rover
-        for rover in io.rovers:
-            print(rover.position)
+        cmd: str
+        for rover, cmd in cmds.items():
+            print(rover, cmd)
 
 
 if __name__ == "__main__":
