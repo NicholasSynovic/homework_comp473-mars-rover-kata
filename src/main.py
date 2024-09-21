@@ -1,6 +1,7 @@
 import click
 
 from src.classes.io import IO
+from src.classes.rover import Rover
 
 
 @click.command()
@@ -33,10 +34,25 @@ from src.classes.io import IO
     show_default=True,
 )
 def main(plateauX: int, plateauY: int, roverCount: int) -> None:
-    io: IO = IO(plateauX=plateauX, plateauY=plateauY, roverCount=roverCount)
+    try:
+        io: IO = IO(
+            plateauX=plateauX,
+            plateauY=plateauY,
+            roverCount=roverCount,
+        )
+    except ValueError as err:
+        print(err)
+        quit(1)
+
     io.createGrid()
     io.createRovers()
-    io.getInput()
+
+    while True:
+        io.getInput()
+
+        rover: Rover
+        for rover in io.rovers:
+            print(rover.position)
 
 
 if __name__ == "__main__":

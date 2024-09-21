@@ -3,7 +3,7 @@ from typing import List
 import numpy
 from numpy import ndarray
 
-from src.classes.rover_mock import Rover
+from src.classes.rover import Rover
 
 
 class IO:
@@ -12,7 +12,7 @@ class IO:
         plateauX: int = 10,
         plateauY: int = 10,
         roverCount: int = 2,
-    ) -> None | int:
+    ) -> None:
         self.x: int
         self.y: int
         self.roverCount: int
@@ -31,6 +31,10 @@ class IO:
             self.roverCount = 2
         else:
             self.roverCount = roverCount
+
+        # TODO: Add test case
+        if self.roverCount > (self.x * self.y):
+            raise ValueError("Number of rovers exceeds plateau area")
 
     def createGrid(self) -> None:
         self.grid: ndarray = numpy.zeros(shape=(self.x, self.y))
