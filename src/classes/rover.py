@@ -1,10 +1,15 @@
-from typing import Tuple
+from typing import List, Tuple
+
+from src.classes.plateau import Plateau
+
+ORIENTATIONS: List[str] = ["N", "S", "E", "W"]
 
 
 class Rover:
-    def __init__(self, x: int, y: int) -> None:
+    def __init__(self, x: int, y: int, plateau: Plateau) -> None:
         self.x: int = x
         self.y: int = y
+        self.plateau: Plateau = plateau
 
         self.directions: list = ["N", "E", "S", "W"]
         self.position: str = self.directions[0]

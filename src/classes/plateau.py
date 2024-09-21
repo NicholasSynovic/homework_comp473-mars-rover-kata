@@ -1,6 +1,8 @@
 import numpy
 from numpy import ndarray
 
+from src.classes.rover import Rover
+
 
 class Plateau:
     def __init__(self, x: int, y: int):
@@ -26,10 +28,18 @@ class Plateau:
         else:
             return False
 
-    def checkMove(self, x: int, y: int, rover) -> bool:
-        if 0 <= x <= self.width and 0 <= y <= self.height:
-            coordinate_x = rover.x + x
-            coordinate_y = rover.y + y
-            if coordinate_x <= self.width and coordinate_y <= self.height:
-                return True
-        return False
+    def validateCoordinate(self, x: int, y: int) -> bool:
+        if (x >= 0) and (x <= self.x) and (y >= 0) and (y <= self.y):
+            return True
+        else:
+            return False
+
+    def updateGrid(self, x: int, y: int, rover: Rover) -> bool:
+        if self.checkEmpty(x=x, y=y) and self.validateCoordinate(
+            x=x,
+            y=y,
+        ):
+            self.grid[x, y] = rover
+            return True
+        else:
+            return False
