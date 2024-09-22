@@ -45,7 +45,7 @@ def test_plateau_gridY() -> None:
             assert plateau.grid.shape == (10, yVal)
 
 
-def test_plateau_createGridXY() -> None:
+def test_plateau_grid() -> None:
     pairs: List[Tuple[int, int]] = [
         (10, 10),
         (10, 20),
@@ -78,10 +78,29 @@ def test_plateau_createGridXY() -> None:
 
 def test_plateau_checkEmptyCell() -> None:
     plateau: Plateau = Plateau()
+    assert plateau.checkEmptyCell(x=10, y=0) is False
+    assert plateau.checkEmptyCell(x=0, y=10) is False
+
     assert plateau.checkEmptyCell(x=0, y=0) is True
 
     plateau.grid[[0, 0]] = 1
     assert plateau.checkEmptyCell(x=0, y=0) is False
+
+
+def test_plateau_updateGrid() -> None:
+    plateau: Plateau = Plateau()
+
+    assert plateau.updateGrid(x=0, y=0, roverID=1) is True
+    assert plateau.updateGrid(x=0, y=0, roverID=2) is False
+    assert plateau.grid[0, 0] == 1
+
+    assert plateau.updateGrid(x=10, y=0, roverID=3) is False
+    assert plateau.updateGrid(x=0, y=10, roverID=4) is False
+
+    assert plateau.updateGrid(x=5, y=0, roverID=5) is True
+    assert plateau.updateGrid(x=0, y=5, roverID=6) is True
+    assert plateau.grid[5, 0] == 5
+    assert plateau.grid[0, 5] == 6
 
 
 # def test_check_move_invalid():

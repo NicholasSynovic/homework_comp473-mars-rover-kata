@@ -1,4 +1,4 @@
-from typing import List, Literal, Tuple
+from typing import Literal, Tuple
 
 from src.classes.plateau import Plateau
 
@@ -26,11 +26,8 @@ class Rover:
 
         self.orientation: Literal["N", "S", "E", "W"] = "N"
 
-        # if self.plateau.updateGrid(x=x, y=y, roverID=self.id):
-        #     self.xPos: int = x
-        #     self.yPos: int = y
-
-        # print(self.xPos, self.yPos)
+        # Place rover
+        self.plateau.updateGrid(x=x, y=y, roverID=self.id)
 
     def _convertCommand(self, cmd) -> Tuple[int, int, str]:
         current = self.directions.index(self.position)

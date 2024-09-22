@@ -20,6 +20,9 @@ class Plateau:
         self.grid: ndarray = numpy.zeros(shape=(self.x, self.y))
 
     def checkEmptyCell(self, x: int, y: int) -> bool:
+        if (x >= self.x) or (y >= self.y):
+            return False
+
         if self.grid[x, y] == 0:
             return True
         else:
@@ -32,7 +35,7 @@ class Plateau:
             return False
 
     def updateGrid(self, x: int, y: int, roverID: int) -> bool:
-        if self.checkEmpty(x=x, y=y) and self.validateCoordinate(
+        if self.checkEmptyCell(x=x, y=y) and self.validateCoordinate(
             x=x,
             y=y,
         ):
