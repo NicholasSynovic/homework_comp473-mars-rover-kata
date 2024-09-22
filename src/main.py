@@ -1,5 +1,4 @@
-from itertools import count
-from typing import List, Literal
+from typing import List
 
 import click
 import numpy
@@ -7,6 +6,22 @@ import numpy
 from src.classes.io import IO
 from src.classes.plateau import Plateau
 from src.classes.rover import Rover
+
+
+def checkNumberOfRovers(
+    roverCount: int,
+    plateauX: int,
+    plateauY: int,
+) -> bool:
+    if roverCount < 1:
+        return False
+
+    area: int = plateauX * plateauY
+
+    if roverCount <= area:
+        return True
+    else:
+        return False
 
 
 @click.command()
