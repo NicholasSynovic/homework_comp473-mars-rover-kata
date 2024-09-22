@@ -3,7 +3,7 @@ from numpy import ndarray
 
 
 class Plateau:
-    def __init__(self, x: int, y: int):
+    def __init__(self, x: int = 10, y: int = 10):
         self.x: int
         self.y: int
 
@@ -19,7 +19,7 @@ class Plateau:
 
         self.grid: ndarray = numpy.zeros(shape=(self.x, self.y))
 
-    def checkEmpty(self, x: int, y: int) -> bool:
+    def checkEmptyCell(self, x: int, y: int) -> bool:
         if self.grid[x, y] == 0:
             return True
         else:

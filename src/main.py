@@ -24,6 +24,19 @@ def checkNumberOfRovers(
         return False
 
 
+def createRovers(plateau: Plateau, roverCount: int = 1) -> bool:
+    # Rovers are instantiated starting in the bottom left corner and then moving across the x axis, followed by moving up the y axis
+    idxLeft: int = 0
+    bottomIndex: int = plateau.y - 1
+
+    roverIDCounter: int = 1
+
+    roverIDX: int
+    for roverIDX in range(roverCount):
+        # For each roverIDX, check if the space is open prior to insertion
+        pass
+
+
 @click.command()
 @click.option(
     "-x",
@@ -56,8 +69,15 @@ def checkNumberOfRovers(
 def main(plateauX: int, plateauY: int, roverCount: int) -> None:
     # Steps:
     # 1. Ensure that the number of rovers specified fit into the plateau area
-    if roverCount > plateauX * plateauY:
-        print("Number of rovers exceeds the area of the palteau")
+    if (
+        checkNumberOfRovers(
+            roverCount=roverCount,
+            plateauX=plateauX,
+            plateauY=plateauY,
+        )
+        is False
+    ):
+        print("Too many rovers on the plateau:", roverCount)
         quit(1)
 
     # 2. Instantiate the plateau with the specified width and length
