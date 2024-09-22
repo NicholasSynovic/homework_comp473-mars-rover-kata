@@ -25,6 +25,20 @@ def checkNumberOfRovers(
 
 
 def findEmptyPlateauCell(plateau: Plateau) -> Tuple[int, int]:
+    """
+    Finds the first instance of an empty cell within a Plateau grid.
+
+    This algorithm starts at the bottom most cell (column: 0, row: n -1) and iterates column wise to identify cells that are equal to 0 (i.e. empty).
+
+    If the algorithm reaches the end of the grid column wise, it decrements the row and starts back at column 0.
+
+    This is done until the first empty cell is identified.
+
+    :param plateau: _description_
+    :type plateau: Plateau
+    :return: Returns the coordinates in (column, row) format
+    :rtype: Tuple[int, int]
+    """
     columnIdx: int = 0
     rowIdx: int = plateau.rows - 1
 
