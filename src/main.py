@@ -1,4 +1,5 @@
-from typing import List
+from itertools import count
+from typing import List, Literal
 
 import click
 import numpy
@@ -6,20 +7,6 @@ import numpy
 from src.classes.io import IO
 from src.classes.plateau import Plateau
 from src.classes.rover import Rover
-
-
-def createRover(plateau: Plateau) -> Rover:
-    # TODO: Add test
-    x: int = 0
-    y: int = 0
-
-    while True:
-        if plateau.checkEmpty(x=x, y=y):
-            break
-        else:
-            x += 1
-
-    return Rover(x=x, y=y)
 
 
 @click.command()
@@ -52,30 +39,39 @@ def createRover(plateau: Plateau) -> Rover:
     show_default=True,
 )
 def main(plateauX: int, plateauY: int, roverCount: int) -> None:
+    # Steps:
+    # 1. Ensure that the number of rovers specified fit into the plateau area
     if roverCount > plateauX * plateauY:
         print("Number of rovers exceeds the area of the palteau")
         quit(1)
 
+    # 2. Instantiate the plateau with the specified width and length
     plateau: Plateau = Plateau(x=plateauX, y=plateauY)
-    plateau.createGrid()
+
+    # 3. Create rovers
 
     rovers: List[Rover] = [
-        createRover(plateau=plateau) for _ in range(roverCount)
+        createRover(
+            plateau=plateau,
+            roverID=10,
+        )
+        for _ in range(roverCount)
     ]  # noqa: E501
 
-    try:
-        io: IO = IO(rovers=rovers)
-    except ValueError as error:
-        print(error)
-        quit(1)
+    print(plateau.grid)
+    # try:
+    #     io: IO = IO(rovers=rovers)
+    # except ValueError as error:
+    #     print(error)
+    #     quit(1)
 
-    while True:
-        cmds: dict[Rover, str] = io.getInput()
+    # while True:
+    #     cmds: dict[Rover, str] = io.getInput()
 
-        rover: Rover
-        cmd: str
-        for rover, cmd in cmds.items():
-            print(rover, cmd)
+    #     rover: Rover
+    #     cmd: str
+    #     for rover, cmd in cmds.items():
+    #         print(rover, cmd)
 
 
 if __name__ == "__main__":

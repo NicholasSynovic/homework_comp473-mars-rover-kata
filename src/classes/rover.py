@@ -1,18 +1,19 @@
-from typing import List, Tuple
+from typing import List, Literal, Tuple
 
 from src.classes.plateau import Plateau
 
-ORIENTATIONS: List[str] = ["N", "S", "E", "W"]
-
 
 class Rover:
-    def __init__(self, x: int, y: int, plateau: Plateau) -> None:
-        self.x: int = x
-        self.y: int = y
+    def __init__(self, x: int, y: int, plateau: Plateau, _id: str) -> None:
         self.plateau: Plateau = plateau
+        self.orientation: Literal["N", "S", "E", "W"] = "N"
+        self.id = _id
 
-        self.directions: list = ["N", "E", "S", "W"]
-        self.position: str = self.directions[0]
+        if self.plateau.updateGrid(x=x, y=y, roverID=self.id):
+            self.xPos: int = x
+            self.yPos: int = y
+
+        print(self.xPos, self.yPos)
 
     def _convertCommand(self, cmd) -> Tuple[int, int, str]:
         current = self.directions.index(self.position)
