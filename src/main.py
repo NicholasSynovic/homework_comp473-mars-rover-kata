@@ -41,17 +41,22 @@ def findEmptyPlateauCell(plateau: Plateau) -> Tuple[int, int]:
     return (idxLeft, bottomIdx)
 
 
-def createRovers(plateau: Plateau, roverCount: int = 1) -> bool:
+def createRovers(plateau: Plateau, roverCount: int = 1) -> List[Rover]:
     # Rovers are instantiated starting in the bottom left corner and then moving across the x axis, followed by moving up the y axis
-    idxLeft: int = 0
-    bottomIdx: int = plateau.y - 1
+    rovers: List[Rover] = []
 
-    roverIDCounter: int = 1
-
-    roverIDX: int
-    for roverIDX in range(roverCount):
+    roverID: int
+    for roverID in range(roverCount):
         coordinates: Tuple[int, int] = findEmptyPlateauCell(plateau=plateau)
-        print(coordinates)
+
+        rover: Rover = Rover(
+            x=coordinates[0],
+            y=coordinates[1],
+            plateau=plateau,
+            _id=roverID,
+        )
+
+        rovers.append(rover)
 
 
 @click.command()

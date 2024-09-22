@@ -4,16 +4,33 @@ from src.classes.plateau import Plateau
 
 
 class Rover:
-    def __init__(self, x: int, y: int, plateau: Plateau, _id: str) -> None:
+    def __init__(
+        self,
+        x: int,
+        y: int,
+        plateau: Plateau,
+        roverID: str,
+    ) -> None:
+        if (x < 0) or (x >= plateau.x):
+            self.x = 0
+        else:
+            self.x = x
+
+        if (y < 0) or (y >= plateau.y):
+            self.y = 0
+        else:
+            self.y = y
+
         self.plateau: Plateau = plateau
+        self.roverID = roverID
+
         self.orientation: Literal["N", "S", "E", "W"] = "N"
-        self.id = _id
 
-        if self.plateau.updateGrid(x=x, y=y, roverID=self.id):
-            self.xPos: int = x
-            self.yPos: int = y
+        # if self.plateau.updateGrid(x=x, y=y, roverID=self.id):
+        #     self.xPos: int = x
+        #     self.yPos: int = y
 
-        print(self.xPos, self.yPos)
+        # print(self.xPos, self.yPos)
 
     def _convertCommand(self, cmd) -> Tuple[int, int, str]:
         current = self.directions.index(self.position)
