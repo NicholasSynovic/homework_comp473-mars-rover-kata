@@ -99,8 +99,8 @@ def test_plateau_updateGrid() -> None:
 
     assert plateau.updateGrid(column=5, row=0, roverID=5) is True
     assert plateau.updateGrid(column=0, row=5, roverID=6) is True
-    assert plateau.grid[5, 0] == 5
-    assert plateau.grid[0, 5] == 6
+    assert plateau.grid[0, 5] == 5
+    assert plateau.grid[5, 0] == 6
 
 
 # def test_check_move_invalid():
