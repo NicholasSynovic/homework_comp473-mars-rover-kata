@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 import click
 import numpy
@@ -24,17 +24,34 @@ def checkNumberOfRovers(
         return False
 
 
+def findEmptyPlateauCell(plateau: Plateau) -> Tuple[int, int]:
+    idxLeft: int = 0
+    bottomIdx: int = plateau.y - 1
+
+    while True:
+        if plateau.checkEmptyCell(x=idxLeft, y=bottomIdx):
+            break
+        else:
+            idxLeft += 1
+
+            if idxLeft == plateau.x:
+                idxLeft = 0
+                bottomIdx -= 1
+
+    return (idxLeft, bottomIdx)
+
+
 def createRovers(plateau: Plateau, roverCount: int = 1) -> bool:
     # Rovers are instantiated starting in the bottom left corner and then moving across the x axis, followed by moving up the y axis
     idxLeft: int = 0
-    bottomIndex: int = plateau.y - 1
+    bottomIdx: int = plateau.y - 1
 
     roverIDCounter: int = 1
 
     roverIDX: int
     for roverIDX in range(roverCount):
-        # For each roverIDX, check if the space is open prior to insertion
-        pass
+        coordinates: Tuple[int, int] = findEmptyPlateauCell(plateau=plateau)
+        print(coordinates)
 
 
 @click.command()
