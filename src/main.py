@@ -25,24 +25,25 @@ def checkNumberOfRovers(
 
 
 def findEmptyPlateauCell(plateau: Plateau) -> Tuple[int, int]:
-    idxLeft: int = 0
-    bottomIdx: int = plateau.y - 1
+    columnIdx: int = 0
+    rowIdx: int = plateau.rows - 1
 
     while True:
-        if plateau.checkEmptyCell(x=idxLeft, y=bottomIdx):
+        if plateau.checkEmptyCell(column=columnIdx, row=rowIdx):
             break
         else:
-            idxLeft += 1
+            columnIdx += 1
 
-            if idxLeft == plateau.x:
-                idxLeft = 0
-                bottomIdx -= 1
+            if columnIdx == plateau.columns:
+                columnIdx = 0
+                rowIdx -= 1
 
-    return (idxLeft, bottomIdx)
+    return (columnIdx, rowIdx)
 
 
 def createRovers(plateau: Plateau, roverCount: int = 1) -> List[Rover]:
-    # Rovers are instantiated starting in the bottom left corner and then moving across the x axis, followed by moving up the y axis
+    # Rovers are instantiated starting in the bottom left corner and then
+    # moving across the x axis, followed by moving up the y axis
     rovers: List[Rover] = []
 
     roverID: int
@@ -108,13 +109,9 @@ def main(plateauColumns: int, plateauRows: int, roverCount: int) -> None:
     # 2. Instantiate the plateau with the specified width and length
     plateau: Plateau = Plateau(columns=plateauColumns, rows=plateauRows)
 
-    print(plateau.grid)
-    quit()
-
     # 3. Create rovers
     rovers: List[Rover] = createRovers(plateau=plateau, roverCount=roverCount)
 
-    print(plateau.grid)
     # try:
     #     io: IO = IO(rovers=rovers)
     # except ValueError as error:

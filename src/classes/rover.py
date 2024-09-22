@@ -11,12 +11,12 @@ class Rover:
         plateau: Plateau,
         roverID: str,
     ) -> None:
-        if (x < 0) or (x >= plateau.x):
+        if (x < 0) or (x >= plateau.columns):
             self.x = 0
         else:
             self.x = x
 
-        if (y < 0) or (y >= plateau.y):
+        if (y < 0) or (y >= plateau.rows):
             self.y = 0
         else:
             self.y = y
@@ -27,7 +27,7 @@ class Rover:
         self.orientation: Literal["N", "S", "E", "W"] = "N"
 
         # Place rover
-        self.plateau.updateGrid(x=x, y=y, roverID=self.roverID)
+        self.plateau.updateGrid(column=x, row=y, roverID=self.roverID)
 
     def _convertCommand(self, cmd) -> Tuple[int, int, str]:
         current = self.directions.index(self.position)

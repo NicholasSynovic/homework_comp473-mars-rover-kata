@@ -23,7 +23,7 @@ class Plateau:
         if (column >= self.columns) or (row >= self.rows):
             return False
 
-        if self.grid[column, row] == 0:
+        if self.grid[row, column] == 0:
             return True
         else:
             return False
@@ -40,11 +40,10 @@ class Plateau:
             return False
 
     def updateGrid(self, column: int, row: int, roverID: int) -> bool:
-        if self.checkEmptyCell(column=column, row=row) and self.validateCoordinate(
-            column=column,
-            row=row,
+        if self.checkEmptyCell(column=column, row=row) and (
+            self.validateCoordinate(column=column, row=row),
         ):
-            self.grid[column, row] = roverID
+            self.grid[row, column] = roverID
             return True
         else:
             return False
