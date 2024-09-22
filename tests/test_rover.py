@@ -1,3 +1,5 @@
+from numpy import array_equal, ndarray
+
 from src.classes.plateau import Plateau
 from src.classes.rover import Rover
 
@@ -57,6 +59,33 @@ def test_rover_orientation() -> None:
     rover: Rover = Rover(x=0, y=0, plateau=plateau, roverID=1)
 
     assert rover.orientation == "N"
+
+
+def test_rover_placement() -> None:
+    plateau: Plateau = Plateau()
+
+    _: Rover = Rover(x=0, y=0, plateau=plateau, roverID=1)
+    assert plateau.grid[0, 0] == 1
+
+    _: Rover = Rover(x=0, y=0, plateau=plateau, roverID=2)
+    assert plateau.grid[0, 0] == 1
+
+    _: Rover = Rover(x=1, y=0, plateau=plateau, roverID=2)
+    assert plateau.grid[1, 0] == 2
+
+    _: Rover = Rover(x=0, y=1, plateau=plateau, roverID=3)
+    assert plateau.grid[0, 1] == 3
+
+    grid: ndarray = plateau.grid
+
+    _: Rover = Rover(x=10, y=10, plateau=plateau, roverID=3)
+    assert array_equal(a1=plateau.grid, a2=grid) is True
+
+    _: Rover = Rover(x=10, y=0, plateau=plateau, roverID=3)
+    assert array_equal(a1=plateau.grid, a2=grid) is True
+
+    _: Rover = Rover(x=0, y=10, plateau=plateau, roverID=3)
+    assert array_equal(a1=plateau.grid, a2=grid) is True
 
 
 # def test_convertCommand() -> None:

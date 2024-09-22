@@ -3,20 +3,20 @@ from typing import List, Tuple
 from src.classes.plateau import Plateau
 
 
-def test_plateau_x() -> None:
-    assert Plateau().x == 10
-    assert Plateau(x=20).x == 20
-    assert Plateau(x=1).x == 1
-    assert Plateau(x=0).x == 10
-    assert Plateau(x=-1).x == 10
+def test_plateau_columns() -> None:
+    assert Plateau().columns == 10
+    assert Plateau(columns=20).columns == 20
+    assert Plateau(columns=1).columns == 1
+    assert Plateau(columns=0).columns == 10
+    assert Plateau(columns=-1).columns == 10
 
 
-def test_plateau_y() -> None:
-    assert Plateau().y == 10
-    assert Plateau(y=20).y == 20
-    assert Plateau(y=1).y == 1
-    assert Plateau(y=0).y == 10
-    assert Plateau(y=-1).y == 10
+def test_plateau_rows() -> None:
+    assert Plateau().rows == 10
+    assert Plateau(rows=20).rows == 20
+    assert Plateau(rows=1).rows == 1
+    assert Plateau(rows=0).rows == 10
+    assert Plateau(rows=-1).rows == 10
 
 
 def test_plateau_gridX() -> None:
@@ -24,7 +24,7 @@ def test_plateau_gridX() -> None:
 
     xVal: int
     for xVal in xValues:
-        plateau: Plateau = Plateau(x=xVal)
+        plateau: Plateau = Plateau(columns=xVal)
 
         if xVal < 1:
             assert plateau.grid.shape == (10, 10)
@@ -37,7 +37,7 @@ def test_plateau_gridY() -> None:
 
     yVal: int
     for yVal in yValues:
-        plateau: Plateau = Plateau(y=yVal)
+        plateau: Plateau = Plateau(rows=yVal)
 
         if yVal < 1:
             assert plateau.grid.shape == (10, 10)
@@ -64,7 +64,7 @@ def test_plateau_grid() -> None:
 
     pair: Tuple[int, int]
     for pair in pairs:
-        plateau: Plateau = Plateau(x=pair[0], y=pair[1])
+        plateau: Plateau = Plateau(columns=pair[0], rows=pair[1])
 
         if (pair[0] < 1) and (pair[1] >= 1):
             assert plateau.grid.shape == (10, pair[1])
@@ -78,27 +78,27 @@ def test_plateau_grid() -> None:
 
 def test_plateau_checkEmptyCell() -> None:
     plateau: Plateau = Plateau()
-    assert plateau.checkEmptyCell(x=10, y=0) is False
-    assert plateau.checkEmptyCell(x=0, y=10) is False
+    assert plateau.checkEmptyCell(columns=10, rows=0) is False
+    assert plateau.checkEmptyCell(columns=0, rows=10) is False
 
-    assert plateau.checkEmptyCell(x=0, y=0) is True
+    assert plateau.checkEmptyCell(columns=0, rows=0) is True
 
     plateau.grid[[0, 0]] = 1
-    assert plateau.checkEmptyCell(x=0, y=0) is False
+    assert plateau.checkEmptyCell(columns=0, rows=0) is False
 
 
 def test_plateau_updateGrid() -> None:
     plateau: Plateau = Plateau()
 
-    assert plateau.updateGrid(x=0, y=0, roverID=1) is True
-    assert plateau.updateGrid(x=0, y=0, roverID=2) is False
+    assert plateau.updateGrid(columns=0, rows=0, roverID=1) is True
+    assert plateau.updateGrid(columns=0, rows=0, roverID=2) is False
     assert plateau.grid[0, 0] == 1
 
-    assert plateau.updateGrid(x=10, y=0, roverID=3) is False
-    assert plateau.updateGrid(x=0, y=10, roverID=4) is False
+    assert plateau.updateGrid(columns=10, rows=0, roverID=3) is False
+    assert plateau.updateGrid(columns=0, rows=10, roverID=4) is False
 
-    assert plateau.updateGrid(x=5, y=0, roverID=5) is True
-    assert plateau.updateGrid(x=0, y=5, roverID=6) is True
+    assert plateau.updateGrid(columns=5, rows=0, roverID=5) is True
+    assert plateau.updateGrid(columns=0, rows=5, roverID=6) is True
     assert plateau.grid[5, 0] == 5
     assert plateau.grid[0, 5] == 6
 

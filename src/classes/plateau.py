@@ -3,43 +3,48 @@ from numpy import ndarray
 
 
 class Plateau:
-    def __init__(self, x: int = 10, y: int = 10):
-        self.x: int
-        self.y: int
+    def __init__(self, columns: int = 10, rows: int = 10):
+        self.columns: int
+        self.rows: int
 
-        if x < 1:
-            self.x = 10
+        if columns < 1:
+            self.columns = 10
         else:
-            self.x = x
+            self.columns = columns
 
-        if y < 1:
-            self.y = 10
+        if rows < 1:
+            self.rows = 10
         else:
-            self.y = y
+            self.rows = rows
 
-        self.grid: ndarray = numpy.zeros(shape=(self.x, self.y))
+        self.grid: ndarray = numpy.zeros(shape=(self.columns, self.rows))
 
-    def checkEmptyCell(self, x: int, y: int) -> bool:
-        if (x >= self.x) or (y >= self.y):
+    def checkEmptyCell(self, column: int, row: int) -> bool:
+        if (column >= self.columns) or (row >= self.rows):
             return False
 
-        if self.grid[x, y] == 0:
+        if self.grid[column, row] == 0:
             return True
         else:
             return False
 
-    def validateCoordinate(self, x: int, y: int) -> bool:
-        if (x >= 0) and (x <= self.x) and (y >= 0) and (y <= self.y):
-            return True
-        else:
-            return False
-
-    def updateGrid(self, x: int, y: int, roverID: int) -> bool:
-        if self.checkEmptyCell(x=x, y=y) and self.validateCoordinate(
-            x=x,
-            y=y,
+    def validateCoordinate(self, column: int, row: int) -> bool:
+        if (
+            (column >= 0)
+            and (column <= self.columns)
+            and (row >= 0)
+            and (row <= self.rows)
         ):
-            self.grid[x, y] = roverID
+            return True
+        else:
+            return False
+
+    def updateGrid(self, column: int, row: int, roverID: int) -> bool:
+        if self.checkEmptyCell(column=column, row=row) and self.validateCoordinate(
+            column=column,
+            row=row,
+        ):
+            self.grid[column, row] = roverID
             return True
         else:
             return False

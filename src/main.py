@@ -9,14 +9,14 @@ from src.classes.rover import Rover
 
 
 def checkNumberOfRovers(
+    columns: int,
+    rows: int,
     roverCount: int,
-    plateauX: int,
-    plateauY: int,
 ) -> bool:
     if roverCount < 1:
         return False
 
-    area: int = plateauX * plateauY
+    area: int = columns * rows
 
     if roverCount <= area:
         return True
@@ -53,29 +53,31 @@ def createRovers(plateau: Plateau, roverCount: int = 1) -> List[Rover]:
             x=coordinates[0],
             y=coordinates[1],
             plateau=plateau,
-            _id=roverID,
+            roverID=roverID + 1,
         )
 
         rovers.append(rover)
 
+    return rovers
+
 
 @click.command()
 @click.option(
-    "-x",
-    "plateauX",
+    "-c",
+    "--columns" "plateauColumns",
     type=click.IntRange(min=1, max_open=True),
     required=False,
     default=100,
-    help="The width of the plateau",
+    help="Number of columns (i.e. width) of the plateau",
     show_default=True,
 )
 @click.option(
-    "-y",
-    "plateauY",
+    "-r",
+    "--rows" "plateauRows",
     type=click.IntRange(min=1, max_open=True),
     required=False,
     default=100,
-    help="The length of the plateau",
+    help="Number of rows (i.e. height) of the plateau",
     show_default=True,
 )
 @click.option(
@@ -88,14 +90,14 @@ def createRovers(plateau: Plateau, roverCount: int = 1) -> List[Rover]:
     help="The number of rovers to deploy",
     show_default=True,
 )
-def main(plateauX: int, plateauY: int, roverCount: int) -> None:
+def main(plateauColumns: int, plateauRows: int, roverCount: int) -> None:
     # Steps:
     # 1. Ensure that the number of rovers specified fit into the plateau area
     if (
         checkNumberOfRovers(
+            columns=plateauColumns,
+            rows=plateauRows,
             roverCount=roverCount,
-            plateauX=plateauX,
-            plateauY=plateauY,
         )
         is False
     ):
@@ -103,17 +105,13 @@ def main(plateauX: int, plateauY: int, roverCount: int) -> None:
         quit(1)
 
     # 2. Instantiate the plateau with the specified width and length
-    plateau: Plateau = Plateau(x=plateauX, y=plateauY)
+    plateau: Plateau = Plateau(columns=plateauColumns, rows=plateauRows)
+
+    print(plateau.grid)
+    quit()
 
     # 3. Create rovers
-
-    rovers: List[Rover] = [
-        createRover(
-            plateau=plateau,
-            roverID=10,
-        )
-        for _ in range(roverCount)
-    ]  # noqa: E501
+    rovers: List[Rover] = createRovers(plateau=plateau, roverCount=roverCount)
 
     print(plateau.grid)
     # try:

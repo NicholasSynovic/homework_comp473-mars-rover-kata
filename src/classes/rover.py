@@ -27,7 +27,7 @@ class Rover:
         self.orientation: Literal["N", "S", "E", "W"] = "N"
 
         # Place rover
-        self.plateau.updateGrid(x=x, y=y, roverID=self.id)
+        self.plateau.updateGrid(x=x, y=y, roverID=self.roverID)
 
     def _convertCommand(self, cmd) -> Tuple[int, int, str]:
         current = self.directions.index(self.position)
