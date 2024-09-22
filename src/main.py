@@ -64,7 +64,8 @@ def createRovers(plateau: Plateau, roverCount: int = 1) -> List[Rover]:
 @click.command()
 @click.option(
     "-c",
-    "--columns" "plateauColumns",
+    "--columns",
+    "plateauColumns",
     type=click.IntRange(min=1, max_open=True),
     required=False,
     default=100,
@@ -73,7 +74,8 @@ def createRovers(plateau: Plateau, roverCount: int = 1) -> List[Rover]:
 )
 @click.option(
     "-r",
-    "--rows" "plateauRows",
+    "--rows",
+    "plateauRows",
     type=click.IntRange(min=1, max_open=True),
     required=False,
     default=100,
@@ -81,7 +83,6 @@ def createRovers(plateau: Plateau, roverCount: int = 1) -> List[Rover]:
     show_default=True,
 )
 @click.option(
-    "-r",
     "--rover-count",
     "roverCount",
     type=click.IntRange(min=1, max_open=True),

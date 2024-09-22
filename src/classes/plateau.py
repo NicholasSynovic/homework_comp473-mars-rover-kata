@@ -17,7 +17,7 @@ class Plateau:
         else:
             self.rows = rows
 
-        self.grid: ndarray = numpy.zeros(shape=(self.columns, self.rows))
+        self.grid: ndarray = numpy.zeros(shape=(self.rows, self.columns))
 
     def checkEmptyCell(self, column: int, row: int) -> bool:
         if (column >= self.columns) or (row >= self.rows):
