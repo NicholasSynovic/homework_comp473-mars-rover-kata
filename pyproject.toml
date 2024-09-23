@@ -14,6 +14,7 @@ classifiers = ["Development Status :: 1 - Planning"]
 python = "^3.10"
 click = "^8.1.7"
 numpy = "^2.1.1"
+pytest = "^8.3.3"
 
 [build-system]
 requires = ["poetry-core"]
