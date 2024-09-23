@@ -8,6 +8,15 @@
 
 ## Context
 
+The user should be able to see the current state of the Plateau prior to
+executing commands.
+
 ## Decision
 
+The IO class will have to be able to access the current Plateau state to print
+the Plateau grid to the user.
+
 ## Consequences
+
+The IO class will have access to a minimal set of attributes of the Plateau
+class in order to fulfill this decision.
