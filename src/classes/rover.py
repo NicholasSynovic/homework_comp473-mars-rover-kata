@@ -1,5 +1,6 @@
-from typing import Literal, Tuple
+from typing import Tuple
 
+from src.classes.orientation import Orientation
 from src.classes.plateau import Plateau
 
 
@@ -24,31 +25,44 @@ class Rover:
         self.plateau: Plateau = plateau
         self.roverID = roverID
 
-        self.orientation: Literal["N", "S", "E", "W"] = "N"
+        self.orientation: Orientation = Orientation()
 
         # Place rover
         self.plateau.updateGrid(column=x, row=y, roverID=self.roverID)
 
-    def _convertCommand(self, cmd) -> Tuple[int, int, str]:
-        current = self.directions.index(self.position)
+    def update(self, cmd: str) -> None:
+        char: str
+        for char in cmd:
+            match char:
+                case "R":
+                    self.orientation.next()
+                case "L":
+                    self.orientation.prev()
+                case "M":
+                    self.move()
 
-        # insane that python let's you loop backwards on a list
-        if cmd == "L":
-            self.position = self.directions[current - 1]
-        if cmd == "R":
-            self.position = self.directions[(current + 1) % 4]
+    def move(self) -> bool:
+        currentOrientation: str = self.orientation.get()
 
-        if cmd == "M":
-            self.move(self, cmd)
+        movement: Tuple[int, int]
+        match currentOrientation:
+            case "N":
+                movement = (0, -1)
+            case "E":
+                movement = (1, 0)
+            case "S":
+                movement = (0, 1)
+            case "W":
+                movement = (-1, 0)
 
-        return [self.x, self.y, self.position]
+        newX: int = self.x + movement[0]
+        newY: int = self.y + movement[1]
 
-    def move(self, str) -> bool:
-        if self.position == "N":
-            self.y += 1
-        elif self.position == "E":
-            self.x += 1
-        elif self.position == "S":
-            self.y -= 1
-        elif self.position == "W":
-            self.x -= 1
+        if self.plateau.updateGrid(
+            column=newX,
+            row=newY,
+            roverID=self.roverID,
+        ):
+            self.plateau.clearCell(column=self.x, row=self.y)
+            self.x = newX
+            self.y = newY
