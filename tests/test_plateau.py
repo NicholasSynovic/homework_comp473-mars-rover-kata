@@ -4,45 +4,45 @@ from src.classes.plateau import Plateau
 
 
 def test_plateau_columns() -> None:
-    assert Plateau().columns == 10
-    assert Plateau(columns=20).columns == 20
-    assert Plateau(columns=1).columns == 1
-    assert Plateau(columns=0).columns == 10
+    assert Plateau().columns == 11
+    assert Plateau(columns=20).columns == 21
+    assert Plateau(columns=1).columns == 2
+    assert Plateau(columns=0).columns == 1
     assert Plateau(columns=-1).columns == 10
 
 
 def test_plateau_rows() -> None:
-    assert Plateau().rows == 10
-    assert Plateau(rows=20).rows == 20
-    assert Plateau(rows=1).rows == 1
-    assert Plateau(rows=0).rows == 10
+    assert Plateau().rows == 11
+    assert Plateau(rows=20).rows == 21
+    assert Plateau(rows=1).rows == 2
+    assert Plateau(rows=0).rows == 1
     assert Plateau(rows=-1).rows == 10
 
 
 def test_plateau_gridColumns() -> None:
-    xValues: List[int] = [10, 20, 1, 0, -1]
+    columns: List[int] = [10, 20, 1, 0, -1]
 
-    xVal: int
-    for xVal in xValues:
-        plateau: Plateau = Plateau(columns=xVal)
+    columns: int
+    for column in columns:
+        plateau: Plateau = Plateau(columns=column)
 
-        if xVal < 1:
-            assert plateau.grid.shape == (10, 10)
+        if column < 0:
+            assert plateau.grid.shape == (11, 10)
         else:
-            assert plateau.grid.shape == (10, xVal)
+            assert plateau.grid.shape == (11, column + 1)
 
 
 def test_plateau_gridRows() -> None:
-    yValues: List[int] = [10, 20, 1, 0, -1]
+    rows: List[int] = [10, 20, 1, 0, -1]
 
-    yVal: int
-    for yVal in yValues:
-        plateau: Plateau = Plateau(rows=yVal)
+    row: int
+    for row in rows:
+        plateau: Plateau = Plateau(rows=row)
 
-        if yVal < 1:
-            assert plateau.grid.shape == (10, 10)
+        if row < 0:
+            assert plateau.grid.shape == (10, 11)
         else:
-            assert plateau.grid.shape == (yVal, 10)
+            assert plateau.grid.shape == (row + 1, 11)
 
 
 def test_plateau_grid() -> None:
@@ -66,25 +66,37 @@ def test_plateau_grid() -> None:
     for pair in pairs:
         plateau: Plateau = Plateau(columns=pair[0], rows=pair[1])
 
-        if (pair[0] < 1) and (pair[1] >= 1):
-            assert plateau.grid.shape == (pair[1], 10)
-        elif (pair[0] >= 1) and (pair[1] < 1):
-            assert plateau.grid.shape == (10, pair[0])
-        elif (pair[0] < 1) and (pair[1] < 1):
+        if (pair[0] < 0) and (pair[1] >= 0):
+            assert plateau.grid.shape == (pair[1] + 1, 10)
+        elif (pair[0] >= 0) and (pair[1] < 0):
+            assert plateau.grid.shape == (10, pair[0] + 1)
+        elif (pair[0] < 0) and (pair[1] < 0):
             assert plateau.grid.shape == (10, 10)
         else:
-            assert plateau.grid.shape == (pair[1], pair[0])
+            assert plateau.grid.shape == (pair[1] + 1, pair[0] + 1)
 
 
 def test_plateau_checkEmptyCell() -> None:
     plateau: Plateau = Plateau()
-    assert plateau.checkEmptyCell(column=10, row=0) is False
-    assert plateau.checkEmptyCell(column=0, row=10) is False
+    assert plateau.checkEmptyCell(column=11, row=0) is False
+    assert plateau.checkEmptyCell(column=0, row=11) is False
 
     assert plateau.checkEmptyCell(column=0, row=0) is True
 
-    plateau.grid[[0, 0]] = 1
+    plateau.grid[0, 0] = 1
     assert plateau.checkEmptyCell(column=0, row=0) is False
+
+
+def test_plateau_validateCoordinate() -> None:
+    plateau: Plateau = Plateau()
+
+    assert plateau.validateCoordinate(column=0, row=0) is True
+    assert plateau.validateCoordinate(column=-1, row=0) is False
+    assert plateau.validateCoordinate(column=0, row=-1) is False
+    assert plateau.validateCoordinate(column=11, row=0) is True
+    assert plateau.validateCoordinate(column=0, row=11) is True
+    assert plateau.validateCoordinate(column=12, row=0) is False
+    assert plateau.validateCoordinate(column=0, row=12) is False
 
 
 def test_plateau_updateGrid() -> None:
@@ -94,24 +106,10 @@ def test_plateau_updateGrid() -> None:
     assert plateau.updateGrid(column=0, row=0, roverID=2) is False
     assert plateau.grid[0, 0] == 1
 
-    assert plateau.updateGrid(column=10, row=0, roverID=3) is False
-    assert plateau.updateGrid(column=0, row=10, roverID=4) is False
+    assert plateau.updateGrid(column=12, row=0, roverID=3) is False
+    assert plateau.updateGrid(column=0, row=12, roverID=4) is False
 
     assert plateau.updateGrid(column=5, row=0, roverID=5) is True
     assert plateau.updateGrid(column=0, row=5, roverID=6) is True
     assert plateau.grid[0, 5] == 5
     assert plateau.grid[5, 0] == 6
-
-
-# def test_check_move_invalid():
-#     plateau = Plateau(5, 5)
-#     rover = Rover(6, 6, "N")
-
-#     assert plateau.checkMove(rover) == False
-
-
-# def test_check_move_on_edge():
-#     plateau = Plateau(5, 5)
-#     rover = Rover(5, 5, "N")
-
-#     assert plateau.checkMove(rover) == True
