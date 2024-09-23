@@ -39,7 +39,8 @@ class Rover:
                 case "L":
                     self.orientation.prev()
                 case "M":
-                    self.move()
+                    if self.move() is False:
+                        break
 
     def move(self) -> bool:
         currentOrientation: str = self.orientation.get()
@@ -66,3 +67,8 @@ class Rover:
             self.plateau.clearCell(column=self.x, row=self.y)
             self.x = newX
             self.y = newY
+
+            return True
+
+        else:
+            return False
