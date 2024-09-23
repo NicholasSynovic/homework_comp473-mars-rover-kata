@@ -1,6 +1,10 @@
 name: Execute Test Suite
 
-on: [push]
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [main]
 
 jobs:
   build:
@@ -12,6 +16,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install poetry
+        run: pipx install poetry
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
