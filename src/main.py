@@ -38,7 +38,7 @@ def findEmptyPlateauCell(plateau: Plateau) -> Tuple[int, int]:
     :type plateau: Plateau
     :return: Returns the coordinates in (column, row) format
     :rtype: Tuple[int, int]
-    """
+    """  # noqa: E501
     columnIdx: int = 0
     rowIdx: int = plateau.rows - 1
 
@@ -126,19 +126,14 @@ def main(plateauColumns: int, plateauRows: int, roverCount: int) -> None:
     # 3. Create rovers
     rovers: List[Rover] = createRovers(plateau=plateau, roverCount=roverCount)
 
-    # try:
-    #     io: IO = IO(rovers=rovers)
-    # except ValueError as error:
-    #     print(error)
-    #     quit(1)
+    # 4. Instantiate IO
+    io: IO = IO(rovers=rovers)
 
-    # while True:
-    #     cmds: dict[Rover, str] = io.getInput()
-
-    #     rover: Rover
-    #     cmd: str
-    #     for rover, cmd in cmds.items():
-    #         print(rover, cmd)
+    while True:
+        print(plateau.grid)
+        io.getInput()
+        io.sendCommands()
+        print()
 
 
 if __name__ == "__main__":
