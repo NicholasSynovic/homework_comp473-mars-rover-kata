@@ -5,33 +5,45 @@ from src.classes.rover import Rover
 
 class IO:
     def __init__(self, rovers: List[Rover]) -> None:
-        # TODO: Update tests
         if len(rovers) == 0:
             raise ValueError("No Rovers availible")
 
         self.rovers: List[Rover] = rovers
 
-    def _replaceLetters(self, string: str) -> str:
+        self.cmds: dict[Rover, str] = {}
+
+    def replaceLetters(self, string: str) -> str:
         return "".join(char if char in "RLM" else "" for char in string)
 
-    def getInput(self) -> dict[Rover, str]:
+    def getInput(self) -> None:
         data: dict[Rover, str] = {}
 
         idx: int
         for idx in range(len(self.rovers)):
             rover: Rover = self.rovers[idx]
 
-            roverX: int = self.rovers[idx].x
-            roverY: int = self.rovers[idx].y
+            roverID: int = rover.roverID
+            roverX: int = rover.x
+            roverY: int = rover.plateau.rows - rover.y - 1
+            roverOrientation: str = rover.orientation.get()
 
             cmd: str = (
-                input(f"Rover {idx} (x: {roverX}, y: {roverY}): ")
+                input(
+                    f"Rover {roverID} (column: {roverX}, row: {roverY}, orientation: {roverOrientation}): "  # noqa: E501
+                )
                 .strip()
                 .upper()  # noqa: E501
             )
 
-            cmd = self._replaceLetters(string=cmd)
+            data[rover] = self.replaceLetters(string=cmd)
 
-            data[rover] = cmd
+        self.cmds = data
 
-        return data
+    def sendCommands(self) -> None:
+        rover: Rover
+        cmd: str | None
+        for rover, cmd in self.cmds.items():
+            if cmd == "":
+                continue
+            else:
+                rover.update(cmd=cmd)
