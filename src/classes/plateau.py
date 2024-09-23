@@ -7,12 +7,12 @@ class Plateau:
         self.columns: int
         self.rows: int
 
-        if columns < 1:
+        if columns < 0:
             self.columns = 10
         else:
             self.columns = columns + 1
 
-        if rows < 1:
+        if rows < 0:
             self.rows = 10
         else:
             self.rows = rows + 1
