@@ -4,7 +4,7 @@
     "Description": "Architecture Decision Record",
     "Location": "docs/adr",
     "Prefix": "ADR",
-    "TemplatePath": null
+    "TemplatePath": "docs/adr/.templates/madr.md"
   },
   "Rfc": {
     "Name": "rfc",
