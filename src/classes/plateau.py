@@ -10,12 +10,12 @@ class Plateau:
         if columns < 1:
             self.columns = 10
         else:
-            self.columns = columns
+            self.columns = columns + 1
 
         if rows < 1:
             self.rows = 10
         else:
-            self.rows = rows
+            self.rows = rows + 1
 
         self.grid: ndarray = numpy.zeros(shape=(self.rows, self.columns))
 
@@ -40,10 +40,17 @@ class Plateau:
             return False
 
     def updateGrid(self, column: int, row: int, roverID: int) -> bool:
-        if self.checkEmptyCell(column=column, row=row) and (
-            self.validateCoordinate(column=column, row=row),
+        if self.checkEmptyCell(
+            column=column,
+            row=row,
+        ) and self.validateCoordinate(
+            column=column,
+            row=row,
         ):
             self.grid[row, column] = roverID
             return True
         else:
             return False
+
+    def clearCell(self, column: int, row: int) -> None:
+        self.grid[row, column] = 0
