@@ -16,6 +16,7 @@ class IO:
         return "".join(char if char in "RLM" else "" for char in string)
 
     def getInput(self) -> None:
+        # TODO: Figure out how to test this
         data: dict[Rover, str] = {}
 
         idx: int
