@@ -1,36 +1,106 @@
-# Python Template Repository
+# Mars Rover Kata
 
-> A template repository that Python projects can inherit from to ensure tooling
-> consistency
+> Attempt at the Thoughtworks Mars Rover Kata problem as described by
+> [here](https://danilsuits.github.io/mars-rover-kata/)
 
 ## Table of Contents
 
-- [Python Template Repository](#python-template-repository)
+- [Mars Rover Kata](#mars-rover-kata)
   - [Table of Contents](#table-of-contents)
   - [About](#about)
-  - [Supported Tooling](#supported-tooling)
+    - [The Mars Rover Kata](#the-mars-rover-kata)
+      - [Problem](#problem)
+      - [INPUT](#input)
+      - [OUTPUT](#output)
+      - [EXAMPLE](#example)
+  - [How To Run](#how-to-run)
+  - [Homework Report](#homework-report)
 
 ## About
 
-This is a template repository that is intended to be inherited by other template
-repositories *to ensure consistent common tool deployment across languages*.
+This repository contains the homework solution, report, and tests necessary to
+complete the Thoughtworks Mars Rover Kata as described
+[here](https://danilsuits.github.io/mars-rover-kata/).
 
-This will also support *optional* tooling that services like GitHub offer in
-order to provide repository owners access to these features without them having
-to discover it themselves.
+The description of the Kata is provided here in case the above link ever goes
+down or is made unaccessible in the future:
 
-## Supported Tooling
+### The Mars Rover Kata
 
-The following tooling is supported:
+Research suggests that the original version of this problem was part of the
+Thoughtworks interview loop as far back as 2007. I haven’t been able to find an
+authoritative source, but the consensus view seems to be that the form was
+something like what follows below.
 
-- [Base Template Tooling](https://github.com/NicholasSynovic/template_base)
-- [Python .gitignore](.gitignore)
-- [Pypi Requirements](requirements.txt)
-  - [Poetry](.pyproject.toml)
-  - Sphinx
-- [Python pre-commit hooks](.pre-commit-config.yaml)
-  - Pyroma
-  - [isort](.isort.cfg)
-  - Black
-  - Flake8
-  - Bandit
+#### Problem
+
+A squad of robotic rovers are to be landed by NASA on a plateau on Mars. This
+plateau, which is curiously rectangular, must be navigated by the rovers so that
+their on-board cameras can get a complete view of the surrounding terrain to
+send back to Earth.
+
+A rover’s position and location is represented by a combination of x and y
+co-ordinates and a letter representing one of the four cardinal compass points.
+The plateau is divided up into a grid to simplify navigation. An example
+position might be 0, 0, N, which means the rover is in the bottom left corner
+and facing North.
+
+In order to control a rover, NASA sends a simple string of letters. The possible
+letters are ‘L’, ‘R’ and ‘M’. ‘L’ and ‘R’ makes the rover spin 90 degrees left
+or right respectively, without moving from its current spot. ‘M’ means move
+forward one grid point, and maintain the same heading.
+
+Assume that the square directly North from (x, y) is (x, y+1).
+
+#### INPUT
+
+The first line of input is the upper-right coordinates of the plateau, the
+lower-left coordinates are assumed to be 0,0.
+
+The rest of the input is information pertaining to the rovers that have been
+deployed. Each rover has two lines of input. The first line gives the rover’s
+position, and the second line is a series of instructions telling the rover how
+to explore the plateau. The position is made up of two integers and a letter
+separated by spaces, corresponding to the x and y co-ordinates and the rover’s
+orientation.
+
+Each rover will be finished sequentially, which means that the second rover
+won’t start to move until the first one has finished moving.
+
+#### OUTPUT
+
+The output for each rover should be its final co-ordinates and heading.
+
+#### EXAMPLE
+
+**Test Input:**
+
+```shell
+5 5
+1 2 N
+LMLMLMLMM
+3 3 E
+MMRMMRMRRM
+```
+
+**Expected Output:**
+
+```shell
+1 3 N
+5 1 E
+```
+
+## How To Run
+
+```shell
+make create-dev
+source env/bin/activate
+make build
+pytest tests/*.py
+cd src
+python main.py --help
+```
+
+## Homework Report
+
+Our report can be found in [Report.pdf](Report.pdf).
