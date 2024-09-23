@@ -13,7 +13,7 @@ def test_rover_x() -> None:
     assert rover.x == 0
 
     rover = Rover(x=10, y=0, plateau=plateau, roverID=1)
-    assert rover.x == 0
+    assert rover.x == 10
 
     rover = Rover(x=11, y=0, plateau=plateau, roverID=1)
     assert rover.x == 0
@@ -31,7 +31,7 @@ def test_rover_y() -> None:
     assert rover.y == 0
 
     rover = Rover(x=0, y=10, plateau=plateau, roverID=1)
-    assert rover.y == 0
+    assert rover.y == 10
 
     rover = Rover(x=0, y=11, plateau=plateau, roverID=1)
     assert rover.y == 0
@@ -58,7 +58,7 @@ def test_rover_orientation() -> None:
     plateau: Plateau = Plateau()
     rover: Rover = Rover(x=0, y=0, plateau=plateau, roverID=1)
 
-    assert rover.orientation == "N"
+    assert rover.orientation.get() == "N"
 
 
 def test_rover_placement() -> None:
@@ -70,10 +70,10 @@ def test_rover_placement() -> None:
     _: Rover = Rover(x=0, y=0, plateau=plateau, roverID=2)
     assert plateau.grid[0, 0] == 1
 
-    _: Rover = Rover(x=1, y=0, plateau=plateau, roverID=2)
+    _: Rover = Rover(x=0, y=1, plateau=plateau, roverID=2)
     assert plateau.grid[1, 0] == 2
 
-    _: Rover = Rover(x=0, y=1, plateau=plateau, roverID=3)
+    _: Rover = Rover(x=1, y=0, plateau=plateau, roverID=3)
     assert plateau.grid[0, 1] == 3
 
     grid: ndarray = plateau.grid
@@ -88,35 +88,48 @@ def test_rover_placement() -> None:
     assert array_equal(a1=plateau.grid, a2=grid) is True
 
 
-# def test_convertCommand() -> None:
-#     rover = Rover(0, 0)
+def test_rover_update() -> None:
+    plateau: Plateau = Plateau()
+    rover: Rover = Rover(x=0, y=0, plateau=plateau, roverID=1)
 
-#     # test looping backwards on a list
-#     turn_left = rover._convertCommand("L")
-#     assert rover.position == "W"
-#     assert turn_left == [0, 0, "W"]
+    assert rover.orientation.get() == "N"
 
-#     # test looping forward on a list
-#     turn_right = rover._convertCommand("R")
-#     assert rover.position == "N"
-#     assert turn_right == [0, 0, "N"]
+    rover.update(cmd="R")
+    assert rover.orientation.get() == "E"
+
+    rover.update(cmd="L")
+    assert rover.orientation.get() == "N"
+
+    rover.update(cmd="LLR")
+    assert rover.orientation.get() == "W"
+
+    rover.update(cmd="M")
+    assert rover.orientation.get() == "W"
 
 
-# def test_move() -> None:
-#     rover = Rover(5, 6)
+def test_rover_move() -> None:
+    plateau: Plateau = Plateau(columns=1, rows=1)
+    rover: Rover = Rover(x=0, y=1, plateau=plateau, roverID=1)
 
-#     # rover starting position upon initialization is N
-#     rover.move("M")
-#     assert rover.y == 7
+    assert rover.orientation.get() == "N"
+    assert rover.x == 0
+    assert rover.y == 1
 
-#     rover.position = "E"
-#     rover.move("M")
-#     assert rover.x == 6
+    rover.update(cmd="M")
+    assert rover.x == 0
+    assert rover.y == 0
 
-#     rover.position = "S"
-#     rover.move("M")
-#     assert rover.y == 6
+    rover.update(cmd="MM")
+    assert rover.x == 0
+    assert rover.y == 0
 
-#     rover.position = "W"
-#     rover.move("M")
-#     assert rover.x == 5
+    rover.orientation.next()
+    assert rover.orientation.get() == "E"
+
+    rover.update(cmd="M")
+    assert rover.x == 1
+    assert rover.y == 0
+
+    rover.update(cmd="MM")
+    assert rover.x == 1
+    assert rover.y == 0
